@@ -26,8 +26,11 @@ for gpu in gpus:
 if gpus:
     tf.config.experimental.set_visible_devices(gpus[hvd.local_rank()], 'GPU')
 
+#(mnist_images, mnist_labels), _ = \
+#    tf.keras.datasets.mnist.load_data(path='mnist-%d.npz' % hvd.rank())
+
 (mnist_images, mnist_labels), _ = \
-    tf.keras.datasets.mnist.load_data(path='mnist-%d.npz' % hvd.rank())
+    tf.keras.datasets.mnist.load_data(path='mnist.npz')
 
 dataset = tf.data.Dataset.from_tensor_slices(
     (tf.cast(mnist_images[..., tf.newaxis] / 255.0, tf.float32),
